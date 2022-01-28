@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React,{useEffect, useState} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import type {Node} from 'react';
 import {
@@ -15,44 +15,42 @@ import {
   StatusBar,
   StyleSheet,
   Text,
+  TouchableHighlight,
   useColorScheme,
   View,
+  ActivityIndicator
 } from 'react-native';
+import Landing  from './screens/Landing';
+import axios from "axios"
+import NewsItem from "./components/NewsItem"
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import News from './screens/News';
+import AddNews from './screens/AddNews';
+import { Provider } from 'react-redux';
 
-
-
-
+const Stack  = createNativeStackNavigator()
 
 const App: () => Node = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-
  
 
+
+
+
   return (
-    <SafeAreaView >
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-     
-    </SafeAreaView>
+    // <Provider>
+    <NavigationContainer>
+    <Stack.Navigator initialRouteName='Landing'>
+    <Stack.Screen name='Landing' component={Landing} />
+      <Stack.Screen name='News' component={News} />
+      <Stack.Screen name="AddNews" component={AddNews}/>
+    </Stack.Navigator>
+ 
+  </NavigationContainer>
+  // </Provider>
   );
 };
 
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
+
 
 export default App;
+//"$ adb -s <device name> reverse tcp:8081 tcp:8081"

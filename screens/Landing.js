@@ -1,11 +1,14 @@
-import { StyleSheet, Text, View, SafeAreaView, ScrollView, TouchableHighlight, StatusBar, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, ScrollView, TouchableHighlight, StatusBar, ActivityIndicator, TouchableOpacity, FlatList } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import baseUrl from '../utils/helpers';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons"
 import NewsItem from '../components/NewsItem';
 import axios from 'axios';
-const Landing = ({navigation}) => {
+import { useIsFocused } from '@react-navigation/native';
 
+
+const Landing = ({navigation}) => {
+let isfocused = useIsFocused()
     const [news, setNews] = useState();
 
     const fetchNews = async()=>{
@@ -19,7 +22,10 @@ const Landing = ({navigation}) => {
     }  
     
     useEffect(()=>{
-    fetchNews()
+      if(isfocused){
+        fetchNews()
+      }
+   
     },[])
     
     
@@ -34,9 +40,13 @@ const Landing = ({navigation}) => {
         <Text>Fetching News</Text>
       </View>:( <>
         
+        <FlatList
+        data={news}
+        renderItem={({item})=><NewsItem  data={item} nav={navigation.navigate} />}
+        keyExtractor={item => item.id}
+      />
 
-
-          <ScrollView style={styles.scroll}>
+          {/* <ScrollView style={styles.scroll}>
           
           {news&&news.length>0?news.map((e,id)=>
     <NewsItem key={id} data={e} nav={navigation} />
@@ -44,16 +54,16 @@ const Landing = ({navigation}) => {
           
           
           {news?<Text>{news.length}</Text>:null}
-          </ScrollView>
+          </ScrollView> */}
           
           
           </>)}
-          <TouchableHighlight style={styles.btn}  onPress={()=>{navigation.navigate("AddNews")}}>
+          <TouchableOpacity style={styles.btn}  onPress={()=>{navigation.navigate("AddNews")}}>
             <View style={styles.iconbutton}>
           <Icon  color={"#fff"}  name='feather' size={30}/>
           <Text style={styles.btntext}>Add News</Text>
             </View>
-          </TouchableHighlight>
+          </TouchableOpacity>
           
         </SafeAreaView>
       );
@@ -64,6 +74,7 @@ export default Landing;
 
 const styles = StyleSheet.create({
     container:{flex:1,
+      display:"flex"
    },
     scroll:{
       backgroundColor:"#eee", 
@@ -96,5 +107,16 @@ alignItems:'center',
     btntext:{
       color:"#fff"
     },
+    c:{
+      alignSelf:"center",
+      fontSize:18
+
+    },
+    activity:{
+      justifyContent:"center",
+      alignItems:'center',
+      alignSelf:"center",
+      flex:1
+    }
     
     });

@@ -17,6 +17,7 @@
     "formik": "^2.2.9",
     "react": "17.0.2",
     "react-native": "0.67.1",
+    "react-native-cached-image": "^1.4.3",
     "react-native-elements": "^3.4.2",
     "react-native-image-picker": "^4.7.1",
     "react-native-image-slider-box": "^1.1.15",

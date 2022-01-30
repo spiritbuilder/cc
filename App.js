@@ -27,6 +27,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import News from './screens/News';
 import AddNews from './screens/AddNews';
 import { Provider } from 'react-redux';
+import EditNews from './screens/EditNews';
 
 const Stack  = createNativeStackNavigator()
 
@@ -51,7 +52,8 @@ const App: () => Node = () => {
       }} >
     <Stack.Screen name='Landing' component={Landing} options={{ title: 'Latest News' }} />
       <Stack.Screen name='News' component={News} />
-      <Stack.Screen name="AddNews" component={AddNews}/>
+        <Stack.Screen name="AddNews" component={AddNews} />
+        <Stack.Screen name="Edit News" component={EditNews} />
     </Stack.Navigator>
  
   </NavigationContainer>
